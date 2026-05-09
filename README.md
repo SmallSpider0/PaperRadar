@@ -269,6 +269,20 @@ docker run -d \
 http://<server-ip>:8080/paperradar/
 ```
 
+关键页面截图：
+
+| Dashboard | 登录 |
+| --- | --- |
+| ![PaperRadar Dashboard](docs/screenshots/dashboard.png) | ![PaperRadar Login](docs/screenshots/login.png) |
+
+| 论文检索 | 对话式检索 |
+| --- | --- |
+| ![PaperRadar Papers Search](docs/screenshots/search.png) | ![PaperRadar Chat Search](docs/screenshots/chat.png) |
+
+| 主题订阅 | 系统状态 |
+| --- | --- |
+| ![PaperRadar Subscriptions](docs/screenshots/subscriptions.png) | ![PaperRadar System Status](docs/screenshots/system.png) |
+
 API 健康检查：
 
 ```bash

@@ -269,20 +269,6 @@ docker run -d \
 http://<server-ip>:8080/paperradar/
 ```
 
-关键页面入口：
-
-| 页面 | 路径 | 说明 |
-| --- | --- | --- |
-| 首页 / Dashboard | `/paperradar/` | 项目概览、能力说明和主要功能入口 |
-| 登录 | `/paperradar/login` | 使用启动参数中的 `PAPERRADAR_ADMIN_USERNAME` / `PAPERRADAR_ADMIN_PASSWORD` 登录 |
-| 论文检索 | `/paperradar/search` | 检索随仓库导入的 2025 年四大安全顶会论文元数据、摘要和主题画像 |
-| 对话式检索 | `/paperradar/chat` | 用自然语言提问并查看检索引用；未配置 `GOOGLE_API_KEY` 时 LLM 能力受限 |
-| 主题订阅 | `/paperradar/subscriptions` | 创建关注主题、运行匹配并查看命中记录 |
-| 系统状态 | `/paperradar/system` | 查看服务、队列和关键配置状态 |
-| 用户中心 | `/paperradar/user` | 查看当前账号、修改密码或退出登录 |
-
-> 前端页面通过同一容器内的 API 前缀 `/paperradar-api` 访问后端；容器同时兼容直接访问 `/api/...`。除登录页和健康检查外，主要功能页面通常需要先登录。
-
 API 健康检查：
 
 ```bash

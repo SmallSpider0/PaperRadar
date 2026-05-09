@@ -134,7 +134,17 @@ data/seed/paperradar-paperdata.sql.gz
 data/seed/paperradar-paperdata.sql.gz.sha256
 ```
 
-当前 seed 数据规模：
+当前 seed 数据聚焦 **2025 年四大安全顶会**，共包含 1237 篇论文元数据及其衍生处理结果：
+
+| 会议 | 年份 | 论文数 |
+| --- | ---: | ---: |
+| USENIX Security Symposium | 2025 | 455 |
+| ACM Conference on Computer and Communications Security (CCS) | 2025 | 316 |
+| IEEE Symposium on Security and Privacy (S&P) | 2025 | 255 |
+| NDSS Symposium | 2025 | 211 |
+| **合计** |  | **1237** |
+
+按数据表统计：
 
 | 数据表 | 数量 |
 | --- | ---: |
@@ -151,11 +161,17 @@ data/seed/paperradar-paperdata.sql.gz.sha256
 
 包含内容：
 
-- 会议/期刊 venue 与 edition 信息。
-- 论文元数据，例如标题、作者、摘要、DOI、来源 URL、发布时间等。
-- 已生成的 metadata embedding。
-- 已生成的 topic profile 与相关运行记录。
+- 2025 年 USENIX Security、ACM CCS、IEEE S&P、NDSS 四大安全顶会论文元数据。
+- 论文标题、作者、摘要、DOI、来源 URL、内容策略等字段。
+- 已生成的 metadata embedding，可用于语义检索。
+- 已生成的 topic profile 与相关运行记录，可用于主题浏览和 RAG 检索增强。
 - 查询归一化、查询类型、查询 embedding 等缓存和规则表。
+
+内容策略说明：
+
+- USENIX Security、ACM CCS、NDSS 论文记录标记为 `on_demand_allowed`，支持按需抓取全文。
+- IEEE S&P 论文记录标记为 `metadata_only`，默认只提供元数据。
+- seed 不包含本地下载的 PDF 全文文件。
 
 不包含内容：
 

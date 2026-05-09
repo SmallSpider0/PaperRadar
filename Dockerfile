@@ -76,6 +76,8 @@ RUN pip install --no-cache-dir -r app/backend/requirements.txt \
     && chmod +x /usr/local/bin/paperradar-entrypoint.sh \
     && chown -R postgres:postgres /var/lib/postgresql
 
+COPY data/seed ./data/seed
+
 EXPOSE 8080
 VOLUME ["/var/lib/postgresql/data", "/var/lib/paperradar"]
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/paperradar-entrypoint.sh"]

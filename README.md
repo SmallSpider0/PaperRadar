@@ -182,7 +182,9 @@ data/seed/paperradar-paperdata.sql.gz.sha256
 
 ### 从 seed 恢复数据
 
-如果你使用 Docker 单容器部署，可以在容器启动后执行：
+如果你使用 Docker 单容器部署，通常不需要手动恢复：容器首次启动时会在 `papers` 表为空的情况下自动导入该 seed。
+
+如果你关闭了自动导入，或需要手动重新导入，可以执行：
 
 ```bash
 gunzip -c data/seed/paperradar-paperdata.sql.gz | docker exec -i paperradar psql \
@@ -239,6 +241,8 @@ docker build -t paperradar:latest \
 ```
 
 ### 2. 一键启动
+
+Docker 单容器模式会在首次启动时自动初始化 PostgreSQL schema，并在 `papers` 表为空时自动导入随仓库包含的 2025 年四大安全顶会论文 seed 数据（1237 篇）。
 
 最小启动示例：
 
@@ -332,7 +336,19 @@ docker rm -f paperradar
 
 ### 5. 数据导入和维护
 
-容器启动时会自动初始化 PostgreSQL 并执行数据库 schema。
+容器启动时会自动初始化 PostgreSQL 并执行数据库 schema。默认情况下，如果数据库中还没有论文记录，容器会自动导入：
+
+```text
+data/seed/paperradar-paperdata.sql.gz
+```
+
+也可以通过环境变量控制 seed 导入：
+
+```bash
+-e PAPERRADAR_AUTO_IMPORT_SEED=true   # 默认：自动导入
+-e PAPERRADAR_AUTO_IMPORT_SEED=false  # 跳过自动导入
+-e PAPERRADAR_SEED_PATH=/opt/paperradar/data/seed/paperradar-paperdata.sql.gz
+```
 
 如果要运行项目脚本，例如采集、归一化、入库：
 

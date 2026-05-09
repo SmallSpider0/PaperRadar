@@ -19,6 +19,8 @@ export PAPERRADAR_REDIS_URL="${PAPERRADAR_REDIS_URL:-redis://127.0.0.1:6379/0}"
 export PAPERRADAR_ADMIN_USERNAME="${PAPERRADAR_ADMIN_USERNAME:-admin}"
 export PAPERRADAR_ADMIN_PASSWORD="${PAPERRADAR_ADMIN_PASSWORD:-paperradar}"
 export PAPERRADAR_AUTH_COOKIE_SECURE="${PAPERRADAR_AUTH_COOKIE_SECURE:-false}"
+export PAPERRADAR_AUTO_IMPORT_SEED="${PAPERRADAR_AUTO_IMPORT_SEED:-true}"
+export PAPERRADAR_SEED_PATH="${PAPERRADAR_SEED_PATH:-$PAPERRADAR_HOME/data/seed/paperradar-paperdata.sql.gz}"
 
 if [[ ! "$PAPERRADAR_DB_NAME" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]]; then
   log "invalid PAPERRADAR_DB_NAME: use only letters, numbers and underscore"
@@ -71,6 +73,24 @@ redis-server --daemonize yes --bind 127.0.0.1 --port 6379 --save "" --appendonly
 log "applying database schema"
 cd "$PAPERRADAR_HOME/app"
 PYTHONPATH=. python3 scripts/apply_schema.py
+
+if [ "$PAPERRADAR_AUTO_IMPORT_SEED" = "true" ] && [ -f "$PAPERRADAR_SEED_PATH" ]; then
+  paper_count="$(PGPASSWORD="$PAPERRADAR_DB_PASSWORD" psql -h "$PAPERRADAR_DB_HOST" -p "$PAPERRADAR_DB_PORT" -U "$PAPERRADAR_DB_USER" -d "$PAPERRADAR_DB_NAME" -Atc "SELECT COUNT(*) FROM papers;" 2>/dev/null || echo 0)"
+  if [ "${paper_count:-0}" = "0" ]; then
+    log "importing bundled paper seed: $PAPERRADAR_SEED_PATH"
+    PYTHONPATH=. python3 scripts/import_seed.py >/tmp/paperradar-seed-import.log 2>&1 || {
+      cat /tmp/paperradar-seed-import.log >&2
+      exit 1
+    }
+    cat /tmp/paperradar-seed-import.log
+    imported_count="$(PGPASSWORD="$PAPERRADAR_DB_PASSWORD" psql -h "$PAPERRADAR_DB_HOST" -p "$PAPERRADAR_DB_PORT" -U "$PAPERRADAR_DB_USER" -d "$PAPERRADAR_DB_NAME" -Atc "SELECT COUNT(*) FROM papers;")"
+    log "seed import complete: papers=$imported_count"
+  else
+    log "skipping seed import: papers table already has $paper_count rows"
+  fi
+else
+  log "skipping seed import: PAPERRADAR_AUTO_IMPORT_SEED=$PAPERRADAR_AUTO_IMPORT_SEED seed_exists=$([ -f "$PAPERRADAR_SEED_PATH" ] && echo yes || echo no)"
+fi
 
 log "starting PaperRadar retrieval worker"
 (

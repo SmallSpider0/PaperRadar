@@ -1,0 +1,13 @@
+[Unit]
+Description=PaperRadar Web
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/paperradar/app/frontend
+Environment=NEXT_PUBLIC_API_BASE=https://example.com/paperradar-api
+ExecStart=/usr/bin/npm run start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

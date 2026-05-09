@@ -1,0 +1,68 @@
+{
+  "cases": [
+    {
+      "query": "中毒攻击",
+      "expected_topic": "中毒攻击"
+    },
+    {
+      "query": "帮我找中毒攻击相关论文",
+      "expected_topic": "中毒攻击"
+    },
+    {
+      "query": "提示注入攻击",
+      "expected_topic": "提示注入攻击"
+    },
+    {
+      "query": "帮我找提示注入攻击的论文",
+      "expected_topic": "提示注入攻击"
+    },
+    {
+      "query": "零知识证明",
+      "expected_topic": "零知识证明"
+    },
+    {
+      "query": "零知识证明相关的论文",
+      "expected_topic": "零知识证明"
+    },
+    {
+      "query": "安全多方计算",
+      "expected_topic": "安全多方计算"
+    },
+    {
+      "query": "关于浏览器中的指纹攻击",
+      "expected_topic": "浏览器中的指纹攻击"
+    },
+    {
+      "query": "同态加密方向的论文",
+      "expected_topic": "同态加密"
+    },
+    {
+      "query": "隐私计算方面的研究",
+      "expected_topic": "隐私计算"
+    },
+    {
+      "query": "AI 安全",
+      "expected_topic": "AI 安全"
+    },
+    {
+      "query": "LLM 安全",
+      "expected_topic": "LLM 安全"
+    },
+    {
+      "query": "后门攻击",
+      "expected_topic": "后门攻击"
+    },
+    {
+      "query": "数据投毒攻击",
+      "expected_topic": "数据投毒攻击"
+    },
+    {
+      "query": "模型窃取攻击",
+      "expected_topic": "模型窃取攻击"
+    },
+    {
+      "query": "成员推断攻击",
+      "expected_topic": "成员推断攻击"
+    }
+  ]
+}

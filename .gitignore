@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# Node
+node_modules/
+.next/
+dist/
+# Next static export (build output; deploy rsyncs from here, do not commit)
+app/frontend/out/
+
+# Env
+.env
+.env.local
+
+# OS
+.DS_Store
+
+# Runtime data
+data/raw/*
+data/parsed/*
+data/generated/*
+!data/raw/.gitkeep
+!data/parsed/.gitkeep
+!data/generated/.gitkeep
+
+storage/papers/*
+storage/reports/*
+storage/figures/*
+!storage/papers/.gitkeep
+!storage/reports/.gitkeep
+!storage/figures/.gitkeep
+
+__pycache__/
+# Local secrets / credentials
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+*_rsa
+*_dsa
+*_ecdsa
+*_ed25519

@@ -1,0 +1,750 @@
+{
+  "version": 1,
+  "profiles": [
+    {
+      "topic_id": "ai-security",
+      "primary_canonical_topics": [
+        "ai security",
+        "security of ai",
+        "AI security",
+        "AI 安全",
+        "AI安全"
+      ],
+      "strategy_type": "broad_aggregate",
+      "query_scopes_default": ["broad_topic"],
+      "prototype_clusters": [
+        {
+          "id": "llm-jailbreaks",
+          "match_terms": ["jailbreak", "jailbreaking", "safety alignment", "twinbreak", "jbshield", "selfdefend"]
+        },
+        {
+          "id": "prompt-injection-rag",
+          "match_terms": ["prompt injection", "rag", "retrieval-augmented", "structured queries", "topic-fliprag"]
+        },
+        {
+          "id": "agentic-llm-systems",
+          "match_terms": ["agentic systems", "llm-based agent", "plugin", "tool use", "llm agents", "taint-style vulnerabilities"]
+        },
+        {
+          "id": "rag-codegen-security",
+          "match_terms": ["retrieval-augmented", "retrieval augmented", "code generation", "codegen", "retrieval-augmented code generation", "retrieval augmented code generation", "retrieval-augmented codegen", "rag code generation", "rag codegen", "code generation security", "importsnare", "dependency hijacking", "malicious dependency", "poisoned documentation", "code manual hijacking", "code manual", "documentation poisoning", "dependency confusion", "package hallucination", "retrieval poisoning", "package ecosystem attack", "rag security", "racg"]
+        },
+        {
+          "id": "llm-app-ecosystem",
+          "match_terms": ["app stores", "llm app stores", "app ecosystem", "apps with abusive potential"]
+        },
+        {
+          "id": "model-misuse-attacks",
+          "match_terms": ["model stealing", "model malware", "malware", "misuse detection", "tensorflow apis"]
+        },
+        {
+          "id": "model-poisoning-backdoors",
+          "match_terms": ["data poisoning", "training-time poisoning", "training data poisoning", "backdoor attack", "backdoor defense", "clean-label", "dirty-label", "clean label", "training provenance", "fine-grained training provenance", "trajectory spectrum", "poisonspot", "oneflip", "onesflip", "barbie", "dshield"]
+        },
+        {
+          "id": "llm-backdoors-adapters",
+          "match_terms": ["llm backdoor", "trojan", "bait", "embedx", "peftguard", "adapter backdoor", "lora", "parameter-efficient fine-tuning", "infected adapter"]
+        },
+        {
+          "id": "prompt-ip-and-ecosystem",
+          "match_terms": ["prompt stealing", "prompt leakage", "system prompt", "prompt obfuscation", "prompt marketplaces", "system vectors", "prompt ip", "prompt services", "real-world prompt services", "real-world prompts", "in-the-wild prompts"]
+        },
+        {
+          "id": "privacy-extraction-stealing",
+          "match_terms": ["membership inference", "mia", "pii extraction", "training data extraction", "training-data extraction", "data extraction", "memorization extraction", "dataset extraction", "model inversion", "model extraction", "model stealing", "query-based extraction", "query synthesis", "knockoff", "model functionality stealing", "stealing machine learning models", "copycat", "copycat cnn", "copycat network", "system prompt extraction", "codebreaker", "private investigator", "privacyxray"]
+        },
+        {
+          "id": "watermark-ownership-integrity",
+          "match_terms": ["watermark", "watermarking", "model watermarking", "neural watermarking", "ownership verification", "ownership claim", "model attribution", "provenance", "source tracing", "copyright auditing", "fingerprinting", "fingerprint", "traitor tracing", "watermark robustness", "watermark removal", "tree-ring", "tree-ring watermark", "rag-wm", "unmarker", "explanation as a watermark", "watermarking language models"]
+        }
+      ],
+      "neighbor_drift_clusters": [
+        {
+          "id": "generic-llm-apps",
+          "match_terms": ["shell command", "hardware ip piracy", "formal verification", "vulnerability detection"]
+        }
+      ],
+      "parser": {
+        "boost_topic_labels": ["ai security", "llm security", "llm safety"],
+        "extra_should_terms": ["jailbreak", "prompt injection", "agentic systems", "app stores", "importsnare", "code generation security", "retrieval-augmented code generation", "rag code generation", "rag codegen", "code manual hijacking", "documentation poisoning", "dependency hijacking", "dependency confusion", "malicious dependency", "model malware", "data poisoning", "training data poisoning", "training provenance", "trajectory spectrum", "backdoor", "membership inference", "pii extraction", "training data extraction", "model extraction", "model stealing", "query-based extraction", "model inversion", "prompt stealing", "system prompt", "prompt obfuscation", "prompt services", "watermark", "watermarking", "model watermarking", "ownership verification", "model attribution", "fingerprinting", "adapter backdoor"],
+        "extra_negative_terms": ["formal verification", "shell command explainer"]
+      },
+      "expansion": {
+        "extra_topic_expansions_generic": ["llm security", "llm safety", "prompt injection", "jailbreak", "agentic systems", "app stores", "code generation security", "retrieval-augmented code generation", "rag code generation", "dependency hijacking", "model malware", "data poisoning", "backdoor defense", "membership inference", "training data extraction", "model extraction", "model stealing", "query-based extraction", "prompt stealing", "watermarking", "model watermarking", "ownership verification"],
+        "variant_expansions_generic": ["llm security", "prompt injection", "agentic systems", "code generation security", "retrieval-augmented code generation", "rag code generation", "data poisoning", "backdoor defense", "membership inference", "model extraction", "model stealing", "prompt stealing", "watermarking", "ownership verification"]
+      },
+      "candidate": {
+        "per_route_limit_scale": { "vector": 1.0, "lexical": 1.05, "exact": 1.0, "topic": 1.15 },
+        "broad_aggregate_max_per_prototype": 2,
+        "broad_aggregate_other_cap": 3,
+        "broad_aggregate_head_limit": 48,
+        "query_targeted_bucket_caps": {
+          "model-poisoning-backdoors": 6,
+          "llm-backdoors-adapters": 4,
+          "privacy-extraction-stealing": 7,
+          "prompt-ip-and-ecosystem": 5,
+          "watermark-ownership-integrity": 6,
+          "rag-codegen-security": 7,
+          "prompt-injection-rag": 3
+        },
+        "query_specific_targeted_bucket_caps": {
+          "privacy-extraction-stealing": 6,
+          "prompt-ip-and-ecosystem": 6,
+          "watermark-ownership-integrity": 6,
+          "rag-codegen-security": 6
+        },
+        "query_specific_suppressed_bucket_caps": {
+          "llm-jailbreaks": 1,
+          "prompt-injection-rag": 1,
+          "agentic-llm-systems": 1,
+          "watermark-ownership-integrity": 2,
+          "prompt-ip-and-ecosystem": 2,
+          "privacy-extraction-stealing": 2
+        },
+        "query_specific_family_head_caps": {
+          "prompt-ip-and-ecosystem": {
+            "prompt-ip-and-ecosystem": 6,
+            "watermark-ownership-integrity": 1,
+            "privacy-extraction-stealing": 1,
+            "rag-codegen-security": 1,
+            "model-misuse-attacks": 1,
+            "model-poisoning-backdoors": 1,
+            "llm-backdoors-adapters": 1,
+            "llm-app-ecosystem": 2,
+            "llm-jailbreaks": 1,
+            "prompt-injection-rag": 1,
+            "agentic-llm-systems": 1
+          },
+          "rag-codegen-security": {
+            "rag-codegen-security": 6,
+            "prompt-injection-rag": 1,
+            "prompt-ip-and-ecosystem": 1,
+            "watermark-ownership-integrity": 1,
+            "privacy-extraction-stealing": 1,
+            "llm-jailbreaks": 1,
+            "agentic-llm-systems": 1,
+            "model-poisoning-backdoors": 1
+          },
+          "privacy-extraction-stealing": {
+            "privacy-extraction-stealing": 6,
+            "watermark-ownership-integrity": 1,
+            "prompt-ip-and-ecosystem": 1,
+            "rag-codegen-security": 1,
+            "llm-jailbreaks": 1,
+            "prompt-injection-rag": 1,
+            "model-misuse-attacks": 2
+          },
+          "watermark-ownership-integrity": {
+            "watermark-ownership-integrity": 6,
+            "prompt-ip-and-ecosystem": 1,
+            "privacy-extraction-stealing": 1,
+            "rag-codegen-security": 1,
+            "llm-jailbreaks": 1,
+            "prompt-injection-rag": 1,
+            "model-misuse-attacks": 1
+          }
+        },
+        "query_suppressed_bucket_caps": {
+          "llm-jailbreaks": 1,
+          "prompt-injection-rag": 1,
+          "agentic-llm-systems": 2,
+          "model-poisoning-backdoors": 2
+        }
+      },
+      "scoring": {
+        "neighbor": {
+          "positive_terms": ["ai security", "llm security", "llm safety", "jailbreak", "prompt injection", "agentic systems", "code generation security", "retrieval-augmented code generation", "rag code generation", "dependency hijacking", "importsnare", "malicious dependency", "documentation poisoning", "data poisoning", "backdoor", "membership inference", "training data extraction", "model extraction", "model stealing", "query-based extraction", "prompt stealing", "watermark", "watermarking", "model watermarking", "ownership verification", "model attribution"],
+          "negative_terms": ["formal verification", "shell command explainer", "hardware ip piracy", "membership inference"],
+          "positive_weight": 0.07,
+          "negative_weight": 0.06,
+          "title_bonus": 0.08,
+          "title_penalty": 0.08
+        },
+        "purity": {
+          "canonical_terms": ["jailbreak", "prompt injection", "llm security", "llm safety", "agentic systems", "code generation security", "retrieval-augmented code generation", "rag code generation", "code manual hijacking", "documentation poisoning", "dependency hijacking", "importsnare", "data poisoning", "training provenance", "trajectory spectrum", "backdoor", "membership inference", "training data extraction", "model extraction", "model stealing", "prompt stealing", "system prompt", "prompt obfuscation", "watermark", "watermarking", "ownership verification", "model attribution"],
+          "drift_terms": ["formal verification", "shell command", "hardware ip piracy"]
+        }
+      }
+    },
+    {
+      "topic_id": "llm-safety",
+      "primary_canonical_topics": [
+        "llm safety",
+        "model safety",
+        "LLM safety",
+        "LLM 安全",
+        "LLM安全"
+      ],
+      "strategy_type": "broad_aggregate",
+      "query_scopes_default": ["broad_topic"],
+      "prototype_clusters": [
+        {
+          "id": "alignment-refusal",
+          "match_terms": ["safety alignment", "refusal", "unlearning safety alignment", "aligned llms"]
+        },
+        {
+          "id": "jailbreak-defense",
+          "match_terms": ["jailbreak", "jbshield", "selfdefend", "defending large language models"]
+        },
+        {
+          "id": "content-moderation-policy",
+          "match_terms": ["content policy", "content moderation", "generative ai products"]
+        },
+        {
+          "id": "safeguard-benchmarks",
+          "match_terms": ["youthsafe", "safeguard model", "safety benchmark"]
+        }
+      ],
+      "neighbor_drift_clusters": [
+        {
+          "id": "privacy-or-capability",
+          "match_terms": ["privacy", "internal states inversion", "device search engine"]
+        }
+      ],
+      "parser": {
+        "boost_topic_labels": ["llm safety", "model safety", "ai security"],
+        "extra_should_terms": ["safety alignment", "refusal", "jailbreak defense"],
+        "extra_negative_terms": ["privacy", "device search engine"]
+      },
+      "expansion": {
+        "extra_topic_expansions_generic": ["model safety", "safety alignment", "jailbreak defense", "content moderation"],
+        "variant_expansions_generic": ["model safety", "safety alignment"]
+      },
+      "candidate": {
+        "per_route_limit_scale": { "vector": 1.0, "lexical": 1.05, "exact": 1.0, "topic": 1.15 },
+        "broad_aggregate_max_per_prototype": 2,
+        "broad_aggregate_other_cap": 3,
+        "broad_aggregate_head_limit": 48
+      },
+      "scoring": {
+        "neighbor": {
+          "positive_terms": ["llm safety", "model safety", "safety alignment", "refusal", "jailbreak defense", "content moderation"],
+          "negative_terms": ["privacy", "internal states inversion", "device search engine"],
+          "positive_weight": 0.07,
+          "negative_weight": 0.06,
+          "title_bonus": 0.08,
+          "title_penalty": 0.09
+        },
+        "purity": {
+          "canonical_terms": ["llm safety", "model safety", "safety alignment", "refusal", "jailbreak defense", "content moderation"],
+          "drift_terms": ["privacy", "internal states inversion", "device search engine"]
+        }
+      }
+    },
+    {
+      "topic_id": "zero-knowledge-proofs",
+      "primary_canonical_topics": [
+        "zero-knowledge proofs",
+        "zero knowledge proof",
+        "zkp",
+        "零知识证明"
+      ],
+      "strategy_type": "broad_aggregate",
+      "query_scopes_default": ["broad_topic"],
+      "prototype_clusters": [
+        {
+          "id": "zk-for-he",
+          "match_terms": ["he evaluations", "homomorphic encryption", "zhe"]
+        },
+        {
+          "id": "zk-for-llm-inference",
+          "match_terms": ["llm inference", "ai inference", "high precision", "zkgpt"]
+        },
+        {
+          "id": "distributed-proof-delegation",
+          "match_terms": ["distributed proof delegation", "collaborative zk-snark", "scalable collaborative"]
+        },
+        {
+          "id": "zk-snark-systems",
+          "match_terms": ["zk-snark", "zk-stark", "proof systems", "prover", "polynomial commitment"]
+        },
+        {
+          "id": "zk-general",
+          "match_terms": ["zero-knowledge proofs", "zero knowledge proof", "proof of training", "split learning"]
+        }
+      ],
+      "neighbor_drift_clusters": [
+        {
+          "id": "generic-crypto",
+          "match_terms": ["homomorphic encryption", "secure aggregation", "private set intersection"]
+        }
+      ],
+      "parser": {
+        "boost_topic_labels": ["zero-knowledge proofs", "cryptography"],
+        "extra_should_terms": ["zk-snark", "zk-stark"],
+        "extra_negative_terms": ["homomorphic encryption", "private set intersection"]
+      },
+      "expansion": {
+        "extra_topic_expansions_generic": ["zk-snark", "zk-stark", "zero knowledge proof"],
+        "variant_expansions_generic": ["zk-snark", "zk-stark"]
+      },
+      "candidate": {
+        "per_route_limit_scale": { "vector": 1.0, "lexical": 1.0, "exact": 1.0, "topic": 1.1 },
+        "broad_aggregate_max_per_prototype": 2,
+        "broad_aggregate_other_cap": 3,
+        "broad_aggregate_head_limit": 48
+      },
+      "scoring": {
+        "neighbor": {
+          "positive_terms": ["zero-knowledge proofs", "zk-snark", "zk-stark", "proof system"],
+          "negative_terms": ["homomorphic encryption", "private set intersection"],
+          "positive_weight": 0.07,
+          "negative_weight": 0.06,
+          "title_bonus": 0.08,
+          "title_penalty": 0.08
+        },
+        "purity": {
+          "canonical_terms": ["zero-knowledge proofs", "zk-snark", "zk-stark", "proof system"],
+          "drift_terms": ["homomorphic encryption", "secure aggregation", "private set intersection"]
+        }
+      }
+    },
+    {
+      "topic_id": "secure-multiparty-computation",
+      "primary_canonical_topics": [
+        "secure multiparty computation",
+        "multi-party computation",
+        "mpc",
+        "安全多方计算"
+      ],
+      "strategy_type": "broad_aggregate",
+      "query_scopes_default": ["broad_topic"],
+      "prototype_clusters": [
+        {
+          "id": "dishonest-majority-mpc",
+          "match_terms": ["dishonest-majority", "trusted dealer", "untrusted dealer", "spdz"]
+        },
+        {
+          "id": "asynchronous-mpc",
+          "match_terms": ["asynchronous mpc", "dumbo-mpc", "output delivery"]
+        },
+        {
+          "id": "mpc-systems-compilers",
+          "match_terms": ["llvm for mpc", "smaug", "modular augmentation"]
+        },
+        {
+          "id": "tee-trust-mpc",
+          "match_terms": ["inconsistent trust", "tees", "trusted execution environment"]
+        }
+      ],
+      "neighbor_drift_clusters": [
+        {
+          "id": "psi-overpull",
+          "match_terms": ["private set intersection", "set operations"]
+        }
+      ],
+      "parser": {
+        "boost_topic_labels": ["secure multiparty computation", "privacy-preserving computation"],
+        "extra_should_terms": ["mpc", "multi-party computation"],
+        "extra_negative_terms": ["private set intersection"]
+      },
+      "expansion": {
+        "extra_topic_expansions_generic": ["mpc", "multi-party computation", "dishonest-majority mpc"],
+        "variant_expansions_generic": ["mpc", "multi-party computation"]
+      },
+      "candidate": {
+        "per_route_limit_scale": { "vector": 1.0, "lexical": 1.0, "exact": 1.0, "topic": 1.1 },
+        "broad_aggregate_max_per_prototype": 2,
+        "broad_aggregate_other_cap": 3,
+        "broad_aggregate_head_limit": 48
+      },
+      "scoring": {
+        "neighbor": {
+          "positive_terms": ["secure multiparty computation", "mpc", "multi-party computation", "spdz"],
+          "negative_terms": ["private set intersection"],
+          "positive_weight": 0.07,
+          "negative_weight": 0.06,
+          "title_bonus": 0.08,
+          "title_penalty": 0.08
+        },
+        "purity": {
+          "canonical_terms": ["secure multiparty computation", "mpc", "multi-party computation", "spdz"],
+          "drift_terms": ["private set intersection"]
+        }
+      }
+    },
+    {
+      "topic_id": "privacy-preserving-computation",
+      "primary_canonical_topics": [
+        "privacy-preserving computation",
+        "private computation",
+        "隐私计算",
+        "隐私保护计算"
+      ],
+      "strategy_type": "broad_aggregate",
+      "query_scopes_default": ["broad_topic"],
+      "prototype_clusters": [
+        {
+          "id": "private-inference",
+          "match_terms": ["private inference", "encrypted inference", "model inference", "private training"]
+        },
+        {
+          "id": "ppml",
+          "match_terms": ["ppml", "privacy-preserving machine learning", "quantized models", "privacy-preserving ml"]
+        },
+        {
+          "id": "privacy-learning",
+          "match_terms": ["collaborative learning", "federated learning", "secure aggregation", "differentially private learning"]
+        },
+        {
+          "id": "encrypted-search",
+          "match_terms": ["encrypted search", "searchable encryption", "private information retrieval"]
+        },
+        {
+          "id": "private-set-intersection",
+          "match_terms": ["private set intersection", "psi", "set intersection"]
+        },
+        {
+          "id": "differential-privacy",
+          "match_terms": ["differential privacy", "local differential privacy", "frequency estimation", "shuffle protocol", "randomized response"]
+        }
+      ],
+      "neighbor_drift_clusters": [
+        {
+          "id": "local-dp-noise",
+          "match_terms": ["local differential privacy", "frequency estimation", "shuffle protocol", "randomized response"]
+        },
+        {
+          "id": "gradient-inversion-attacks",
+          "match_terms": ["gradient inversion", "gradient leakage", "label leakage"]
+        },
+        {
+          "id": "generic-2pc-equality",
+          "match_terms": ["secure equality testing", "comparison", "2pc", "two-party computation"]
+        },
+        {
+          "id": "generic-verifiable-computation",
+          "match_terms": ["verifiability", "verifiable computation", "encrypted data"]
+        }
+      ],
+      "parser": {
+        "boost_topic_labels": [
+          "privacy-preserving computation",
+          "privacy-preserving machine learning",
+          "private inference",
+          "encrypted search",
+          "secure aggregation",
+          "differential privacy"
+        ],
+        "extra_negative_terms": [
+          "gradient inversion",
+          "gradient leakage",
+          "secure equality testing",
+          "two-party computation",
+          "verifiable computation"
+        ]
+      },
+      "expansion": {
+        "extra_topic_expansions_generic": [
+          "privacy-preserving machine learning",
+          "private inference",
+          "encrypted search",
+          "secure aggregation",
+          "ppml"
+        ],
+        "variant_expansions_generic": []
+      },
+      "candidate": {
+        "per_route_limit_scale": { "vector": 1.0, "lexical": 1.0, "exact": 1.0, "topic": 1.15 },
+        "broad_aggregate_max_per_prototype": 2,
+        "broad_aggregate_other_cap": 3,
+        "broad_aggregate_head_limit": 48
+      },
+      "scoring": {
+        "neighbor": {
+          "positive_terms": [
+            "privacy-preserving computation",
+            "private computation",
+            "private inference",
+            "private training",
+            "secure aggregation",
+            "encrypted search",
+            "private set intersection",
+            "privacy-preserving machine learning",
+            "ppml",
+            "differential privacy",
+            "differentially private",
+            "federated learning",
+            "collaborative learning",
+            "shuffle protocol",
+            "randomized response"
+          ],
+          "negative_terms": [
+            "gradient inversion",
+            "gradient leakage",
+            "secure equality testing",
+            "two-party computation",
+            "verifiable computation"
+          ],
+          "positive_weight": 0.07,
+          "negative_weight": 0.07,
+          "title_bonus": 0.08,
+          "title_penalty": 0.1
+        },
+        "purity": {
+          "canonical_terms": [
+            "private inference",
+            "private training",
+            "secure aggregation",
+            "encrypted search",
+            "private set intersection",
+            "privacy-preserving machine learning",
+            "ppml",
+            "differential privacy",
+            "differentially private",
+            "federated learning",
+            "collaborative learning",
+            "shuffle",
+            "shuffling"
+          ],
+          "drift_terms": [
+            "privacy-boosting",
+            "blockchain",
+            "cryptocurrency"
+          ]
+        }
+      }
+    },
+    {
+      "topic_id": "malware-detection",
+      "primary_canonical_topics": [
+        "malware detection",
+        "malware analysis",
+        "恶意软件检测",
+        "恶意软件分析"
+      ],
+      "strategy_type": "broad_aggregate",
+      "query_scopes_default": ["broad_topic"],
+      "prototype_clusters": [
+        {
+          "id": "packed",
+          "match_terms": ["packed executables", "packer detection", "packed malware"]
+        },
+        {
+          "id": "android-malware",
+          "match_terms": ["android malware", "android malicious software", "miniapp malware"]
+        },
+        {
+          "id": "classification",
+          "match_terms": ["malware classification", "malware detectors", "deep learning", "imperfectly labeled"]
+        },
+        {
+          "id": "ransomware",
+          "match_terms": ["ransomware detection", "evasive ransomware"]
+        }
+      ],
+      "neighbor_drift_clusters": [
+        {
+          "id": "binary-generic",
+          "match_terms": [
+            "binary function matching",
+            "stripped binary",
+            "variable names",
+            "function names",
+            "binary reverse engineering",
+            "binary analysis"
+          ]
+        },
+        {
+          "id": "traffic-phishing",
+          "match_terms": ["malicious traffic detection", "traffic detection", "phishing detection"]
+        },
+        {
+          "id": "pdf-malware",
+          "match_terms": ["pdf malware", "pdf malware analysis", "pdf malware forensics"]
+        }
+      ],
+      "parser": {
+        "extra_should_terms": [
+          "android malware detection",
+          "packed executables detection",
+          "malware classification",
+          "ransomware detection",
+          "android malicious software"
+        ],
+        "extra_negative_terms": [
+          "binary function matching",
+          "stripped binary",
+          "variable names",
+          "function names",
+          "pdf malware analysis"
+        ]
+      },
+      "expansion": {
+        "extra_topic_expansions_generic": [
+          "android malware detection",
+          "packed executables detection",
+          "malware classification",
+          "packer detection"
+        ],
+        "variant_expansions_generic": []
+      },
+      "candidate": {
+        "per_route_limit_scale": { "vector": 1.0, "lexical": 1.05, "exact": 1.0, "topic": 1.05 },
+        "broad_aggregate_max_per_prototype": 2,
+        "broad_aggregate_other_cap": 3,
+        "broad_aggregate_head_limit": 48
+      },
+      "scoring": {
+        "neighbor": {
+          "positive_terms": [
+            "malware detection",
+            "malware analysis",
+            "packed executables detection",
+            "android malware detection",
+            "packed malware detection",
+            "malware classification",
+            "packer detection",
+            "ransomware detection"
+          ],
+          "negative_terms": [
+            "malicious traffic detection",
+            "traffic detection",
+            "binary function matching",
+            "stripped binary",
+            "binary function",
+            "binary reverse engineering",
+            "reverse engineering",
+            "binary analysis",
+            "phishing detection",
+            "pdf malware",
+            "pdf malware analysis",
+            "pdf malware forensics",
+            "variable names",
+            "function names"
+          ],
+          "positive_weight": 0.08,
+          "negative_weight": 0.1,
+          "title_bonus": 0.1,
+          "title_penalty": 0.12
+        },
+        "purity": {
+          "canonical_terms": [
+            "malware detection",
+            "malware analysis",
+            "packed executables detection",
+            "android malware detection",
+            "malware classification",
+            "packer detection",
+            "ransomware detection",
+            "adversarial android malware detection",
+            "android malicious software",
+            "malware detectors"
+          ],
+          "drift_terms": [
+            "malicious traffic detection",
+            "traffic detection",
+            "binary function matching",
+            "stripped binary",
+            "binary reverse engineering",
+            "reverse engineering",
+            "binary analysis",
+            "phishing detection",
+            "pdf malware",
+            "pdf malware analysis",
+            "pdf malware forensics",
+            "variable names",
+            "function names"
+          ],
+          "malware_title_anchor": true
+        }
+      }
+    },
+    {
+      "topic_id": "homomorphic-encryption",
+      "primary_canonical_topics": [
+        "homomorphic encryption",
+        "fully homomorphic encryption",
+        "fhe",
+        "同态加密",
+        "全同态加密"
+      ],
+      "strategy_type": "broad_aggregate",
+      "query_scopes_default": ["broad_topic"],
+      "prototype_clusters": [
+        {
+          "id": "tfhe-boot",
+          "match_terms": ["tfhe", "bootstrapping", "homomorphic evaluation", "ciphertext sanitization", "noise calibration"]
+        },
+        {
+          "id": "threshold-fhe",
+          "match_terms": ["threshold fhe", "threshold decryption", "universally composable"]
+        },
+        {
+          "id": "fhe-attack-systems",
+          "match_terms": ["fault injection", "verifiable fhe", "plonky2", "correctness", "type checking"]
+        },
+        {
+          "id": "fhe-applications-optimization",
+          "match_terms": ["edit distance", "sparse matrix-vector", "vectorization", "ckks", "batched fully homomorphic encryption"]
+        },
+        {
+          "id": "fhe-core",
+          "match_terms": ["fully homomorphic encryption", "homomorphic encryption", "fhe", "leveled homomorphic"]
+        }
+      ],
+      "neighbor_drift_clusters": [],
+      "parser": {
+        "extra_should_terms": [
+          "fully homomorphic encryption",
+          "tfhe",
+          "bootstrapping",
+          "threshold fhe"
+        ],
+        "extra_negative_terms": [
+          "secure multiparty computation",
+          "private set intersection",
+          "zero-knowledge proofs"
+        ]
+      },
+      "expansion": {
+        "extra_topic_expansions_generic": [
+          "fully homomorphic encryption",
+          "leveled homomorphic encryption",
+          "tfhe",
+          "bootstrapping",
+          "threshold fhe",
+          "ckks"
+        ],
+        "strip_topic_expansions_generic": [
+          "secure computation",
+          "proof system",
+          "zero-knowledge proof",
+          "secure multiparty computation"
+        ],
+        "variant_expansions_generic": [
+          "fully homomorphic encryption",
+          "tfhe",
+          "bootstrapping",
+          "threshold fhe"
+        ]
+      },
+      "candidate": {
+        "per_route_limit_scale": { "vector": 1.05, "lexical": 1.0, "exact": 1.0, "topic": 1.0 },
+        "broad_aggregate_max_per_prototype": 2,
+        "broad_aggregate_other_cap": 3,
+        "broad_aggregate_head_limit": 48
+      },
+      "scoring": {
+        "neighbor": {},
+        "purity": {
+          "canonical_terms": [
+            "fully homomorphic encryption",
+            "homomorphic encryption",
+            "fhe",
+            "tfhe",
+            "bootstrapping",
+            "threshold fhe"
+          ],
+          "title_anchor_terms": [
+            "fully homomorphic encryption",
+            "homomorphic encryption",
+            "fhe",
+            "tfhe"
+          ],
+          "fhe_purity": true
+        }
+      }
+    }
+  ]
+}

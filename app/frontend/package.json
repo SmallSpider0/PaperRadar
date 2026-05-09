@@ -1,0 +1,25 @@
+{
+  "name": "paperradar-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "next dev -p 3100",
+    "verify": "python3 ../../scripts/validate_prebuild.py",
+    "prebuild": "npm run verify",
+    "build": "next build",
+    "start": "next start -H 127.0.0.1 -p 3100"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.6.0",
+    "next": "15.3.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "tailwind-merge": "^3.5.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^3.4.17"
+  }
+}

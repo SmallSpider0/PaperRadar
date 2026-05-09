@@ -1,0 +1,555 @@
+{
+  "config": {
+    "version": 6,
+    "notes": "v6: 增加 variant_agreement_at_10、parser_divergence_vs_rules、prototype_bucket_diagnostics_top10 等诊断字段（见 benchmark_topic_search summary）。v5: family/paraphrase、prototype_role_coverage。",
+    "gold_source": "in_corpus_seed_v1"
+  },
+  "cases": [
+    {
+      "id": "homomorphic-encryption",
+      "family_id": "homomorphic-encryption",
+      "bucket": "broad-topic",
+      "query": "同态加密",
+      "queries": {
+        "direct": "同态加密",
+        "chat": "帮我找同态加密方向的论文"
+      },
+      "description": "验证 broad-topic query 是否能稳定召回 FHE 相关论文",
+      "failure_mode_hint": "broad-topic-overexpands",
+      "expected_topic_labels": ["homomorphic encryption", "cryptography"],
+      "gold_papers": [
+        {"paper_id": "paper_19776db1992376b9", "title": "GlitchFHE: Attacking Fully Homomorphic Encryption Using Fault Injection", "tier": "core"},
+        {"paper_id": "paper_a3ad8b64056c6bbc", "title": "Practical TFHE Ciphertext Sanitization for Oblivious Circuit Evaluation", "tier": "core"},
+        {"paper_id": "paper_f4dac484c73ecfa3", "title": "High-Throughput Universally Composable Threshold FHE Decryption", "tier": "strong"},
+        {"paper_id": "paper_ca0dbcf929b20bef", "title": "Refined TFHE Leveled Homomorphic Evaluation and Its Application", "tier": "strong"},
+        {"paper_id": "paper_5c069c671d991dfd", "title": "Arbitrary-Threshold Fully Homomorphic Encryption with Lower Complexity", "tier": "strong"},
+        {"paper_id": "paper_7acb4cdad7b75175", "title": "Towards Verifiable FHE in Practice: Proving Correct Execution of TFHE's Bootstrapping using plonky2", "tier": "strong"}
+      ],
+      "canonical_gold_papers": [
+        {"paper_id": "paper_19776db1992376b9", "title": "GlitchFHE: Attacking Fully Homomorphic Encryption Using Fault Injection", "role": "fhe-security"},
+        {"paper_id": "paper_a3ad8b64056c6bbc", "title": "Practical TFHE Ciphertext Sanitization for Oblivious Circuit Evaluation", "role": "tfhe-systems"},
+        {"paper_id": "paper_f4dac484c73ecfa3", "title": "High-Throughput Universally Composable Threshold FHE Decryption", "role": "threshold-fhe"},
+        {"paper_id": "paper_ca0dbcf929b20bef", "title": "Refined TFHE Leveled Homomorphic Evaluation and Its Application", "role": "tfhe-evaluation"}
+      ],
+      "paraphrase_queries": [
+        {"label": "en-broad", "modes": ["direct"], "query": "fully homomorphic encryption"},
+        {"label": "en-short", "modes": ["direct"], "query": "FHE"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "zero-knowledge-proofs",
+      "family_id": "zero-knowledge-proofs",
+      "bucket": "broad-topic",
+      "query": "零知识证明",
+      "queries": {
+        "direct": "零知识证明",
+        "chat": "有哪些关于零知识证明的论文"
+      },
+      "description": "验证 ZKP query 的 topic expansion 与 retrieval",
+      "failure_mode_hint": "broad-topic-overexpands",
+      "expected_topic_labels": ["zero-knowledge proofs", "cryptography"],
+      "gold_papers": [
+        {"paper_id": "paper_96553ed7b1a43998", "title": "ZHE: Efficient Zero-Knowledge Proofs for HE Evaluations", "tier": "core"},
+        {"paper_id": "paper_0a2e7550e270efec", "title": "zkGPT: An Efficient Non-interactive Zero-knowledge Proof Framework for LLM Inference", "tier": "core"},
+        {"paper_id": "paper_fb90ec9c6070cace", "title": "Zero-Knowledge AI Inference with High Precision", "tier": "strong"},
+        {"paper_id": "paper_727bc9604999610a", "title": "SoK: Understanding zk-SNARKs: The Gap Between Research and Practice", "tier": "strong"},
+        {"paper_id": "paper_524c78c92fccf38f", "title": "Zero-Knowledge Location Privacy via Accurate Floating-Point SNARKs", "tier": "strong"},
+        {"paper_id": "paper_9ffbf13a4819cb93", "title": "Scalable Collaborative zk-SNARK and Its Application to Fully Distributed Proof Delegation", "tier": "strong"}
+      ],
+      "canonical_gold_papers": [
+        {"paper_id": "paper_727bc9604999610a", "title": "SoK: Understanding zk-SNARKs: The Gap Between Research and Practice", "role": "zk-snark-overview"},
+        {"paper_id": "paper_9ffbf13a4819cb93", "title": "Scalable Collaborative zk-SNARK and Its Application to Fully Distributed Proof Delegation", "role": "distributed-proof-delegation"},
+        {"paper_id": "paper_96553ed7b1a43998", "title": "ZHE: Efficient Zero-Knowledge Proofs for HE Evaluations", "role": "zk-for-he"},
+        {"paper_id": "paper_0a2e7550e270efec", "title": "zkGPT: An Efficient Non-interactive Zero-knowledge Proof Framework for LLM Inference", "role": "zk-for-llm-inference"}
+      ],
+      "paraphrase_queries": [
+        {"label": "en-short", "modes": ["direct"], "query": "ZKP"},
+        {"label": "en-broad", "modes": ["direct"], "query": "zero knowledge proof"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "secure-mpc",
+      "family_id": "secure-mpc",
+      "bucket": "alias-normalization",
+      "query": "安全多方计算",
+      "queries": {
+        "direct": "MPC",
+        "chat": "帮我找安全多方计算相关论文"
+      },
+      "description": "验证 secure MPC 主题的 broad-topic 召回",
+      "failure_mode_hint": "alias-normalization",
+      "expected_topic_labels": ["secure multiparty computation", "privacy-preserving computation"],
+      "gold_papers": [
+        {"paper_id": "paper_5071911048d78e1d", "title": "Towards Efficient and Practical Multi-party Computation under Inconsistent Trust in TEEs", "tier": "core"},
+        {"paper_id": "paper_96868af4c4da1548", "title": "Smaug: Modular Augmentation of LLVM for MPC", "tier": "core"},
+        {"paper_id": "paper_7e238bf2aa206535", "title": "AD-MPC: Asynchronous Dynamic MPC with Guaranteed Output Delivery", "tier": "strong"},
+        {"paper_id": "paper_26166e34de666423", "title": "Rushing at SPDZ: On the Practical Security of Malicious MPC Implementations", "tier": "strong"},
+        {"paper_id": "paper_f5d86ad944f95d4f", "title": "Dumbo-MPC: Efficient Fully Asynchronous MPC with Optimal Resilience", "tier": "strong"},
+        {"paper_id": "paper_4a2a4ab8aaffbe2c", "title": "Preprocessing for Life: Dishonest-Majority MPC with a Trusted or Untrusted Dealer", "tier": "strong"}
+      ],
+      "paraphrase_queries": [
+        {"label": "en-long", "modes": ["direct"], "query": "secure multiparty computation"},
+        {"label": "systems-focus", "modes": ["direct"], "query": "malicious MPC implementations"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "privacy-computing",
+      "family_id": "privacy-computing",
+      "bucket": "broad-topic",
+      "query": "隐私计算",
+      "queries": {
+        "direct": "隐私计算",
+        "chat": "请总结隐私计算方向近年的论文"
+      },
+      "description": "验证 privacy-preserving computation 聚合主题",
+      "failure_mode_hint": "broad-topic-overexpands",
+      "expected_topic_labels": ["privacy-preserving computation", "privacy-preserving machine learning"],
+      "gold_papers": [
+        {"paper_id": "paper_058c5dff6be806fe", "title": "FastLloyd: Federated, Accurate, Secure, and Tunable k-Means Clustering with Differential Privacy", "tier": "core"},
+        {"paper_id": "paper_b4c31af59f46efa9", "title": "Differentially Private Access in Encrypted Search: Achieving Privacy at a Small Cost?", "tier": "core"},
+        {"paper_id": "paper_3df54e7b3b891a8a", "title": "Beyond Statistical Estimation: Differentially Private Individual Computation via Shuffling", "tier": "strong"},
+        {"paper_id": "paper_b1908c09bc9d83de", "title": "SCOPE: Expanding Client-Side Post-Processing for Efficient Privacy-Preserving Model Inference", "tier": "strong"},
+        {"paper_id": "paper_e761882ba925c170", "title": "Secure Noise Sampling for Differentially Private Collaborative Learning", "tier": "strong"},
+        {"paper_id": "paper_cf7171c319e27693", "title": "A New PPML Paradigm for Quantized Models", "tier": "strong"}
+      ],
+      "canonical_gold_papers": [
+        {"paper_id": "paper_b4c31af59f46efa9", "title": "Differentially Private Access in Encrypted Search: Achieving Privacy at a Small Cost?", "role": "encrypted-search"},
+        {"paper_id": "paper_b1908c09bc9d83de", "title": "SCOPE: Expanding Client-Side Post-Processing for Efficient Privacy-Preserving Model Inference", "role": "private-inference"},
+        {"paper_id": "paper_cf7171c319e27693", "title": "A New PPML Paradigm for Quantized Models", "role": "ppml"},
+        {"paper_id": "paper_e761882ba925c170", "title": "Secure Noise Sampling for Differentially Private Collaborative Learning", "role": "privacy-learning"}
+      ],
+      "paraphrase_queries": [
+        {"label": "en-aggregate", "modes": ["direct"], "query": "privacy-preserving computation"},
+        {"label": "en-ppml", "modes": ["direct"], "query": "private inference"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "fuzzing",
+      "family_id": "fuzzing",
+      "bucket": "direct-style",
+      "query": "模糊测试",
+      "queries": {
+        "direct": "fuzzing",
+        "chat": "帮我找模糊测试方向的论文"
+      },
+      "description": "验证 fuzzing broad-topic",
+      "failure_mode_hint": "gold-set-risk; core@10≈0 often indicates gold title/paper_id alignment vs corpus titles, not necessarily empty retrieval",
+      "expected_topic_labels": ["fuzzing"],
+      "gold_papers": [
+        {"paper_id": "paper_0e53db7520dbef91", "title": "Waltzz: WebAssembly Runtime Fuzzing with Stack-Invariant Transformation", "tier": "core"},
+        {"paper_id": "paper_bb1d42da0a1fa519", "title": "Truman: Constructing Device Behavior Models from OS Drivers to Fuzz Virtual Devices", "tier": "core"},
+        {"paper_id": "paper_8ebbd2825cf1223b", "title": "MALintent: Coverage Guided Intent Fuzzing Framework for Android", "tier": "strong"},
+        {"paper_id": "paper_3eeace5146fd521d", "title": "Robust, Efficient, and Widely Available Greybox Fuzzing for COTS Binaries with System Call Pattern Feedback", "tier": "strong"},
+        {"paper_id": "paper_3b01fc4f4a72e11b", "title": "SyzSpec: Specification Generation for Linux Kernel Fuzzing via Under-Constrained Symbolic Execution", "tier": "strong"},
+        {"paper_id": "paper_5b4d8764357c8451", "title": "Protocol-Aware Firmware Rehosting for Effective Fuzzing of Embedded Network Stacks", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "program-analysis",
+      "family_id": "program-analysis",
+      "bucket": "direct-style",
+      "query": "程序分析",
+      "queries": {
+        "direct": "program analysis",
+        "chat": "程序分析方向有哪些论文"
+      },
+      "description": "验证 program analysis broad-topic",
+      "failure_mode_hint": "broad-topic-overexpands",
+      "expected_topic_labels": ["program analysis"],
+      "gold_papers": [
+        {"paper_id": "paper_2ebf4fcf28542f73", "title": "ZIPPER: Static Taint Analysis for PHP Applications with Precision and Efficiency", "tier": "core"},
+        {"paper_id": "paper_dab24028e20b6dc8", "title": "Parcel Mismatch Demystified: Addressing a Decade-Old Security Challenge in Android", "tier": "core"},
+        {"paper_id": "paper_19e367647b33f62d", "title": "Redefining Indirect Call Analysis with KallGraph", "tier": "strong"},
+        {"paper_id": "paper_1a9e3e5409a9cf3d", "title": "TYPEPULSE: Detecting Type Confusion Bugs in Rust Programs", "tier": "strong"},
+        {"paper_id": "paper_6019c94b370f9a27", "title": "Statically Discover Cross-Entry Use-After-Free Vulnerabilities in the Linux Kernel", "tier": "strong"},
+        {"paper_id": "paper_9e609ed14cfe6f65", "title": "Empc: Effective Path Prioritization for Symbolic Execution with Path Cover", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "malware-detection",
+      "family_id": "malware-detection",
+      "bucket": "broad-topic",
+      "query": "恶意软件检测",
+      "queries": {
+        "direct": "恶意软件检测",
+        "chat": "帮我查恶意软件检测相关论文"
+      },
+      "description": "验证 malware detection broad-topic",
+      "failure_mode_hint": "broad-topic-overexpands",
+      "expected_topic_labels": ["malware detection"],
+      "gold_papers": [
+        {"paper_id": "paper_5e94ebabec7eeb4b", "title": "Adversarially Robust Assembly Language Model for Packed Executables Detection", "tier": "core"},
+        {"paper_id": "paper_f20c11c1778e8ed4", "title": "Understanding Miniapp Malware: Identification, Dissection, and Characterization", "tier": "core"},
+        {"paper_id": "paper_5ed57b8b2f58d672", "title": "Deep Learning from Imperfectly Labeled Malware Data", "tier": "strong"},
+        {"paper_id": "paper_c5b197274b930031", "title": "ERW-Radar: An Adaptive Detection System against Evasive Ransomware by Contextual Behavior Detection and Fine-grained Content Analysis", "tier": "strong"},
+        {"paper_id": "paper_948975ef5209f444", "title": "Combating Concept Drift with Explanatory Detection and Adaptation for Android Malware Classification", "tier": "strong"},
+        {"paper_id": "paper_6d9baa2ec1b720c9", "title": "ForeDroid: Scenario-Aware Analysis for Android Malware Detection and Explanation", "tier": "strong"}
+      ],
+      "canonical_gold_papers": [
+        {"paper_id": "paper_5e94ebabec7eeb4b", "title": "Adversarially Robust Assembly Language Model for Packed Executables Detection", "role": "packed-executable-detection"},
+        {"paper_id": "paper_f20c11c1778e8ed4", "title": "Understanding Miniapp Malware: Identification, Dissection, and Characterization", "role": "malware-analysis"},
+        {"paper_id": "paper_6d9baa2ec1b720c9", "title": "ForeDroid: Scenario-Aware Analysis for Android Malware Detection and Explanation", "role": "android-malware-detection"},
+        {"paper_id": "paper_948975ef5209f444", "title": "Combating Concept Drift with Explanatory Detection and Adaptation for Android Malware Classification", "role": "malware-classification"}
+      ],
+      "paraphrase_queries": [
+        {"label": "en-broad", "modes": ["direct", "chat"], "query": "malware detection"},
+        {"label": "android-focus", "modes": ["direct"], "query": "android malware detection"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "web-security",
+      "family_id": "web-security",
+      "bucket": "filter-and-phrase",
+      "query": "Web 安全",
+      "queries": {
+        "direct": "web security",
+        "chat": "找一些 Web 安全方向的论文"
+      },
+      "description": "验证 web security broad-topic",
+      "failure_mode_hint": "filter-and-phrase",
+      "expected_topic_labels": ["web security"],
+      "gold_papers": [
+        {"paper_id": "paper_4284657fc7e08bb2", "title": "Cross-Origin Web Attacks via HTTP/2 Server Push and Signed HTTP Exchange", "tier": "core"},
+        {"paper_id": "paper_8cc07a8c3431241c", "title": "In the DOM We Trust: Exploring the Hidden Dangers of Reading from the DOM on the Web", "tier": "core"},
+        {"paper_id": "paper_061325847ceb8269", "title": "Local Frames: Exploiting Inherited Origins to Bypass Content Blockers", "tier": "strong"},
+        {"paper_id": "paper_9f6060fe5277d93e", "title": "\"Only as Strong as the Weakest Link\": On the Security of Brokered Single Sign-On on the Web", "tier": "strong"},
+        {"paper_id": "paper_752dee39281ad3fc", "title": "Head(er)s Up! Detecting Security Header Inconsistencies in Browsers", "tier": "strong"},
+        {"paper_id": "paper_587ba5995830a317", "title": "BACScan: Automatic Black-Box Detection of Broken-Access-Control Vulnerabilities in Web Applications", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "llm-jailbreak-security",
+      "family_id": "llm-jailbreak-security",
+      "bucket": "chat-style",
+      "query": "LLM jailbreak defense",
+      "queries": {
+        "direct": "LLM jailbreak defense",
+        "chat": "找 LLM jailbreak defense 相关论文"
+      },
+      "description": "验证 jailbreak / prompt attack defense 方向",
+      "failure_mode_hint": "parser-structuring",
+      "expected_topic_labels": ["llm safety", "ai security"],
+      "gold_papers": [
+        {"paper_id": "paper_aa0d3c56a646df6c", "title": "JBShield: Defending Large Language Models from Jailbreak Attacks through Activated Concept Analysis and Manipulation", "tier": "core"},
+        {"paper_id": "paper_90819d0aff4e6db9", "title": "SelfDefend: LLMs Can Defend Themselves against Jailbreaking in a Practical Manner", "tier": "core"},
+        {"paper_id": "paper_8fc9661db8198e8c", "title": "TwinBreak: Jailbreaking LLM Security Alignments based on Twin Prompts", "tier": "strong"},
+        {"paper_id": "paper_2f7ff52b62c12652", "title": "Exploiting Task-Level Vulnerabilities: An Automatic Jailbreak Attack and Defense Benchmarking for LLMs", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "rag-codegen-security",
+      "family_id": "rag-codegen-security",
+      "bucket": "chat-style",
+      "query": "RAG code generation security",
+      "queries": {
+        "direct": "RAG code generation security",
+        "chat": "找 RAG / code generation security 相关论文"
+      },
+      "description": "验证 RAG / code generation hijacking 安全方向",
+      "failure_mode_hint": "parser-structuring",
+      "expected_topic_labels": ["ai security"],
+      "gold_papers": [
+        {"paper_id": "paper_3d8167387b4b3439", "title": "ImportSnare: Directed ”Code Manual” Hijacking in Retrieval-Augmented Code Generation", "tier": "core"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "agentic-llm-security",
+      "family_id": "agentic-llm-security",
+      "bucket": "chat-style",
+      "query": "LLM agent security",
+      "queries": {
+        "direct": "LLM agent security",
+        "chat": "找 LLM agent security 相关论文"
+      },
+      "description": "验证 agentic LLM / tool-use security 方向",
+      "failure_mode_hint": "parser-structuring",
+      "expected_topic_labels": ["ai security"],
+      "gold_papers": [
+        {"paper_id": "paper_4de4c409f8a7a9b7", "title": "Cloak, Honey, Trap: Proactive Defenses Against LLM Agents", "tier": "core"},
+        {"paper_id": "paper_6f4474d013327811", "title": "Make Agent Defeat Agent: Automatic Detection of Taint-Style Vulnerabilities in LLM-based Agents", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "llm-app-ecosystem-security",
+      "family_id": "llm-app-ecosystem-security",
+      "bucket": "chat-style",
+      "query": "LLM app stores security",
+      "queries": {
+        "direct": "LLM app stores security",
+        "chat": "找 LLM app stores security 相关论文"
+      },
+      "description": "验证 LLM app ecosystem / app store security",
+      "failure_mode_hint": "parser-structuring",
+      "expected_topic_labels": ["ai security"],
+      "gold_papers": [
+        {"paper_id": "paper_0fd35be2c4d2f041", "title": "On the (In)Security of LLM App Stores", "tier": "core"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "model-malware-abuse",
+      "family_id": "model-malware-abuse",
+      "bucket": "chat-style",
+      "query": "AI model malware abuse",
+      "queries": {
+        "direct": "AI model malware abuse",
+        "chat": "找 AI model malware abuse 相关论文"
+      },
+      "description": "验证 AI model-as-malware / misuse security 方向",
+      "failure_mode_hint": "parser-structuring",
+      "expected_topic_labels": ["ai security"],
+      "gold_papers": [
+        {"paper_id": "paper_38121741d50fb584", "title": "My Model is Malware to You: Transforming AI Models into Malware by Abusing TensorFlow APIs", "tier": "core"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "prompt-injection-rag-security",
+      "family_id": "prompt-injection-rag-security",
+      "bucket": "chat-style",
+      "query": "prompt injection RAG security",
+      "queries": {
+        "direct": "prompt injection RAG security",
+        "chat": "找 prompt injection / RAG security 相关论文"
+      },
+      "description": "验证 prompt injection / RAG manipulation 安全方向",
+      "failure_mode_hint": "parent-swallows-child",
+      "expected_topic_labels": ["ai security"],
+      "gold_papers": [
+        {"paper_id": "paper_2bf12d99f8bd41e8", "title": "StruQ: Defending Against Prompt Injection with Structured Queries", "tier": "core"},
+        {"paper_id": "paper_ef4f4ca79013ff08", "title": "Topic-FlipRAG: Topic-Orientated Adversarial Opinion Manipulation Attacks to Retrieval-Augmented Generation Models", "tier": "core"},
+        {"paper_id": "paper_7f2d1527f3d19b5c", "title": "DataSentinel: A Game-Theoretic Detection of Prompt Injection Attacks", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "training-data-poisoning-security",
+      "family_id": "training-data-poisoning-security",
+      "bucket": "chat-style",
+      "query": "training data poisoning defense",
+      "queries": {
+        "direct": "training data poisoning defense",
+        "chat": "找 training data poisoning defense 相关论文"
+      },
+      "description": "验证训练数据中毒攻击与防御方向",
+      "failure_mode_hint": "parent-swallows-child",
+      "expected_topic_labels": ["ai security"],
+      "gold_papers": [
+        {"paper_id": "paper_3d27f4cbdfc13f54", "title": "Try to Poison My Deep Learning Data? Nowhere to Hide Your Trajectory Spectrum!", "tier": "core"},
+        {"paper_id": "paper_d15b27db7243b0bc", "title": "PoisonSpot: Precise Spotting of Clean-Label Backdoors via Fine-Grained Training Provenance Tracking", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "model-backdoor-security",
+      "family_id": "model-backdoor-security",
+      "bucket": "chat-style",
+      "query": "model backdoor detection defense",
+      "queries": {
+        "direct": "model backdoor detection defense",
+        "chat": "找 model backdoor detection / defense 相关论文"
+      },
+      "description": "验证模型后门攻击/检测/净化方向",
+      "failure_mode_hint": "parent-swallows-child",
+      "expected_topic_labels": ["ai security"],
+      "gold_papers": [
+        {"paper_id": "paper_c934ca63af4f40f2", "title": "ONEFLIP: One Bit Flip is All It Takes to Inject a Backdoor into Full-Precision Models", "tier": "core"},
+        {"paper_id": "paper_4d3d4a5c36dfc1bd", "title": "BARBIE: Robust Backdoor Detection Based on Latent Separability", "tier": "strong"},
+        {"paper_id": "paper_7683a2f1c3d9d2e4", "title": "DShield: Defending against Backdoor Attacks on Graph Neural Networks via Discrepancy Learning", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "llm-backdoor-security",
+      "family_id": "llm-backdoor-security",
+      "bucket": "chat-style",
+      "query": "LLM backdoor detection",
+      "queries": {
+        "direct": "LLM backdoor detection",
+        "chat": "找 LLM backdoor detection 相关论文"
+      },
+      "description": "验证 LLM backdoor / adapter backdoor 方向",
+      "failure_mode_hint": "parent-swallows-child",
+      "expected_topic_labels": ["ai security"],
+      "gold_papers": [
+        {"paper_id": "paper_4d9772f7b8b9c0a1", "title": "BAIT: Large Language Model Backdoor Scanning by Inverting Attack Target", "tier": "core"},
+        {"paper_id": "paper_1dfbc0f4aa41dd18", "title": "PEFTGuard: Detecting Backdoor Attacks Against Parameter-Efficient Fine-Tuning", "tier": "core"},
+        {"paper_id": "paper_f0f77f35f6f50e54", "title": "EmbedX: Embedding-Based Cross-Trigger Backdoor Attack Against Large Language Models", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "training-data-extraction-security",
+      "family_id": "training-data-extraction-security",
+      "bucket": "chat-style",
+      "query": "LLM training data extraction privacy",
+      "queries": {
+        "direct": "LLM training data extraction privacy",
+        "chat": "找 LLM training data extraction / privacy leakage 相关论文"
+      },
+      "description": "验证训练数据提取 / PII 泄露方向",
+      "failure_mode_hint": "parent-swallows-child",
+      "expected_topic_labels": ["ai security"],
+      "gold_papers": [
+        {"paper_id": "paper_8f9fd8d65f0c7be1", "title": "Codebreaker: Dynamic Extraction Attacks on Code Language Models", "tier": "core"},
+        {"paper_id": "paper_7cf85ddf674f0a31", "title": "Private Investigator: Extracting Personally Identifiable Information from Large Language Models Using Optimized Prompts", "tier": "core"},
+        {"paper_id": "paper_1f8e7a533d11a401", "title": "PrivacyXray: Detecting Privacy Breaches in LLMs through Semantic Consistency and Probability Certainty", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "prompt-ip-leakage-security",
+      "family_id": "prompt-ip-leakage-security",
+      "bucket": "chat-style",
+      "query": "prompt stealing system prompt security",
+      "queries": {
+        "direct": "prompt stealing system prompt security",
+        "chat": "找 prompt stealing / system prompt security 相关论文"
+      },
+      "description": "验证 prompt IP 泄露 / system prompt 保护方向",
+      "failure_mode_hint": "parent-swallows-child",
+      "expected_topic_labels": ["ai security"],
+      "gold_papers": [
+        {"paper_id": "paper_7cb89fa1fd9db5a2", "title": "PRSA: Prompt Stealing Attacks against Real-World Prompt Services", "tier": "core"},
+        {"paper_id": "paper_7d05c0bc2583f0ed", "title": "Prompt Obfuscation for Large Language Models", "tier": "core"},
+        {"paper_id": "paper_5d214e09b06e9350", "title": "On the Effectiveness of Prompt Stealing Attacks on In-The-Wild Prompts", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "llm-safety",
+      "family_id": "llm-safety",
+      "bucket": "chat-style",
+      "query": "LLM 安全",
+      "queries": {
+        "direct": "LLM safety",
+        "chat": "帮我找 LLM 安全方面的论文"
+      },
+      "description": "验证 llm safety broad-topic",
+      "failure_mode_hint": "parser-structuring",
+      "expected_topic_labels": ["llm safety", "ai security"],
+      "gold_papers": [
+        {"paper_id": "paper_90819d0aff4e6db9", "title": "SelfDefend: LLMs Can Defend Themselves against Jailbreaking in a Practical Manner", "tier": "core"},
+        {"paper_id": "paper_d482dbaa1ef57f24", "title": "Refusal Is Not an Option: Unlearning Safety Alignment of Large Language Models", "tier": "core"},
+        {"paper_id": "paper_1112a516f636713a", "title": "Activation Approximations Can Incur Safety Vulnerabilities in Aligned LLMs: Comprehensive Analysis and Defense", "tier": "strong"},
+        {"paper_id": "paper_73c1ddc96a65c308", "title": "Safety Misalignment Against Large Language Models", "tier": "strong"},
+        {"paper_id": "paper_cdc03c1dc0d7cf14", "title": "YouthSafe: A Youth-Centric Safety Benchmark and Safeguard Model for Large Language Models", "tier": "strong"},
+        {"paper_id": "paper_e540ab5d4da30b40", "title": "Unsafe LLM-Based Search: Quantitative Analysis and Mitigation of Safety Risks in AI Web Search", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "ndss-2025-llm-jailbreak",
+      "family_id": "ndss-2025-llm-jailbreak",
+      "bucket": "filter-and-phrase",
+      "query": "NDSS 2025 jailbreak LLM",
+      "queries": {
+        "direct": "NDSS 2025 jailbreak LLM",
+        "chat": "找 NDSS 2025 上和 LLM jailbreak / safety 相关的论文"
+      },
+      "description": "验证会议+年份+LLM jailbreak/safety 意图 query 的召回和过滤",
+      "failure_mode_hint": "filter-and-phrase",
+      "expected_topic_labels": ["llm safety", "ai security"],
+      "gold_papers": [
+        {"paper_id": "paper_73c1ddc96a65c308", "title": "Safety Misalignment Against Large Language Models", "tier": "core"},
+        {"paper_id": "paper_edacac7f8338869e", "title": "IsolateGPT: An Execution Isolation Architecture for LLM-Based Agentic Systems", "tier": "strong"},
+        {"paper_id": "paper_81d18062fa9ea638", "title": "I Know What You Asked: Prompt Leakage via KV-Cache Sharing in Multi-Tenant LLM Serving", "tier": "strong"},
+        {"paper_id": "paper_0dc0be57a422c209", "title": "The Philosopher’s Stone: Trojaning Plugins of Large Language Models", "tier": "strong"}
+      ],
+      "top_k": 20
+    },
+    {
+      "id": "symbolic-execution",
+      "family_id": "symbolic-execution",
+      "bucket": "direct-style",
+      "query": "符号执行",
+      "queries": {
+        "direct": "symbolic execution",
+        "chat": "帮我找符号执行方向的论文"
+      },
+      "description": "验证 symbolic execution 与 fuzzing / program analysis 邻近主题边界",
+      "failure_mode_hint": "parent-swallows-child",
+      "expected_topic_labels": ["program analysis"],
+      "gold_papers": [
+        {"paper_id": "paper_9e609ed14cfe6f65", "title": "Empc: Effective Path Prioritization for Symbolic Execution with Path Cover", "tier": "core"},
+        {"paper_id": "paper_b22073cc7fc536b5", "title": "SCASE: Automated Secret Recovery via Side-Channel-Assisted Symbolic Execution", "tier": "core"},
+        {"paper_id": "paper_3b01fc4f4a72e11b", "title": "SyzSpec: Specification Generation for Linux Kernel Fuzzing via Under-Constrained Symbolic Execution", "tier": "strong"},
+        {"paper_id": "paper_76037cdc1cf2e3e1", "title": "GoSonar: Detecting Logical Vulnerabilities in Memory Safe Language Using Inductive Constraint Reasoning", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "vulnerability-detection",
+      "family_id": "vulnerability-detection",
+      "bucket": "direct-style",
+      "query": "漏洞检测",
+      "queries": {
+        "direct": "vulnerability detection",
+        "chat": "帮我找漏洞检测方向的论文"
+      },
+      "description": "验证 vulnerability detection 与 fuzzing / static analysis 邻近主题边界",
+      "failure_mode_hint": "parent-swallows-child",
+      "expected_topic_labels": ["vulnerability detection"],
+      "gold_papers": [
+        {"paper_id": "paper_c5ed466ad53cd45f", "title": "From Large to Mammoth: A Comparative Evaluation of Large Language Models in Vulnerability Detection", "tier": "core"},
+        {"paper_id": "paper_dbbe668ea4306dc8", "title": "LLMxCPG: Context-Aware Vulnerability Detection Through Code Property Graph-Guided Large Language Models", "tier": "core"},
+        {"paper_id": "paper_f5b90ec7cd1a9fbd", "title": "SCAD: Towards a Universal and Automated Network Side-Channel Vulnerability Detection", "tier": "strong"},
+        {"paper_id": "paper_8f3bf65620bc0f8b", "title": "Effective Directed Fuzzing with Hierarchical Scheduling for Web Vulnerability Detection", "tier": "strong"},
+        {"paper_id": "paper_2486cb8039e19a46", "title": "SV-TrustEval-C: Evaluating Structure and Semantic Reasoning in Large Language Models for Source Code Vulnerability Analysis", "tier": "strong"},
+        {"paper_id": "paper_a3850a132fca8c0e", "title": "Sheep’s Clothing, Wolf’s Data: Detecting Server-Induced Client Vulnerabilities in Windows Remote IPC", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "taint-analysis",
+      "family_id": "taint-analysis",
+      "bucket": "direct-style",
+      "query": "污点分析",
+      "queries": {
+        "direct": "taint analysis",
+        "chat": "帮我找污点分析方向的论文"
+      },
+      "description": "验证 taint analysis 与 generic program analysis / vulnerability detection 邻近主题边界",
+      "failure_mode_hint": "parent-swallows-child",
+      "expected_topic_labels": ["taint analysis"],
+      "gold_papers": [
+        {"paper_id": "paper_2ebf4fcf28542f73", "title": "ZIPPER: Static Taint Analysis for PHP Applications with Precision and Efficiency", "tier": "core"},
+        {"paper_id": "paper_5ca1d2d73426967a", "title": "Detecting Taint-Style Vulnerabilities in Microservice-Structured Web Applications", "tier": "core"},
+        {"paper_id": "paper_c266c6b4be74c74a", "title": "NodeMedic-FINE: Automatic Detection and Exploit Synthesis for Node.js Vulnerabilities", "tier": "strong"},
+        {"paper_id": "paper_bf755426a3cb861a", "title": "EAGLEYE: Exposing Hidden Web Interfaces in IoT Devices via Routing Analysis", "tier": "strong"}
+      ],
+      "top_k": 10
+    },
+    {
+      "id": "binary-analysis",
+      "family_id": "binary-analysis",
+      "bucket": "direct-style",
+      "query": "二进制分析",
+      "queries": {
+        "direct": "binary analysis",
+        "chat": "帮我找二进制分析方向的论文"
+      },
+      "description": "验证 binary analysis 与 generic program analysis 邻近主题边界",
+      "failure_mode_hint": "parent-swallows-child",
+      "expected_topic_labels": ["binary analysis"],
+      "gold_papers": [
+        {"paper_id": "paper_7cf922c464d41fb5", "title": "Disassembly as Weighted Interval Scheduling with Learned Weights", "tier": "core"},
+        {"paper_id": "paper_8e8e759d0683b373", "title": "Tady: A Neural Disassembler without Structural Constraint Violations", "tier": "core"},
+        {"paper_id": "paper_4525b33561d17195", "title": "TypeForge: Synthesizing and Selecting Best-Fit Composite Data Types for Stripped Binaries", "tier": "strong"},
+        {"paper_id": "paper_0e2200f7d58666e5", "title": "You Can't Judge a Binary by Its Header: Data-Code Separation for Non-Standard ARM Binaries using Pseudo Labels", "tier": "strong"}
+      ],
+      "top_k": 10
+    }
+  ]
+}

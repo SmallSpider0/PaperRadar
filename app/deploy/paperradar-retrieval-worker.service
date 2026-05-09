@@ -1,0 +1,17 @@
+[Unit]
+Description=PaperRadar Retrieval Worker
+After=network.target postgresql.service redis.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/paperradar/app
+EnvironmentFile=/etc/paperradar/paperradar.env
+Environment="HTTP_PROXY=http://127.0.0.1:7890"
+Environment="HTTPS_PROXY=http://127.0.0.1:7890"
+Environment="ALL_PROXY=socks5h://127.0.0.1:7890"
+Environment="NO_PROXY=localhost,127.0.0.1,::1"
+ExecStart=/usr/bin/python3 -m backend.retrieval_worker
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

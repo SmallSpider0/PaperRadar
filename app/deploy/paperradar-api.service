@@ -1,0 +1,13 @@
+[Unit]
+Description=PaperRadar API
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/paperradar/app/backend
+EnvironmentFile=/etc/paperradar/paperradar.env
+ExecStart=/usr/bin/python3 -m uvicorn main:app --host 127.0.0.1 --port 8100
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

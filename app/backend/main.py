@@ -1,8 +1,11 @@
 import json
+import os
 import time
+from pathlib import Path
 
 from fastapi import Cookie, Depends, FastAPI, HTTPException, Request, Response, status
-from fastapi.responses import StreamingResponse
+from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from backend.auth import (
@@ -266,6 +269,20 @@ def require_admin(user: AuthUser = Depends(get_current_user)) -> AuthUser:
     if user.role != "admin":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="admin role required")
     return user
+
+
+@app.middleware("http")
+async def strip_single_container_api_prefix(request: Request, call_next):
+    # The static frontend defaults to API_BASE=/paperradar-api so it can work
+    # behind a reverse proxy. In app-only Docker mode there is no nginx rewrite,
+    # so accept that prefix directly inside FastAPI.
+    prefix = "/paperradar-api"
+    path = request.scope.get("path") or ""
+    if path == prefix:
+        request.scope["path"] = "/"
+    elif path.startswith(prefix + "/"):
+        request.scope["path"] = path[len(prefix):] or "/"
+    return await call_next(request)
 
 
 @app.middleware("http")
@@ -867,3 +884,45 @@ def api_list_matches(sub_id: str, user: AuthUser = Depends(get_current_user)) ->
 @app.get("/api/notifications")
 def api_list_notifications(user: AuthUser = Depends(get_current_user)) -> list[dict]:
     return list_notifications(user.id)
+
+
+# Optional single-container/static deployment support.
+# When PAPERRADAR_STATIC_DIR points to a Next.js static export, the API process
+# also serves the frontend. API routes are declared above, so these catch-all
+# frontend routes do not intercept /api/* or /health.
+_STATIC_DIR = os.getenv("PAPERRADAR_STATIC_DIR", "").strip()
+if _STATIC_DIR:
+    _static_path = Path(_STATIC_DIR).resolve()
+    _next_path = _static_path / "_next"
+    if _next_path.exists():
+        app.mount("/paperradar/_next", StaticFiles(directory=str(_next_path)), name="paperradar_next_static")
+
+    @app.get("/paperradar")
+    @app.get("/paperradar/")
+    def paperradar_frontend_index() -> FileResponse:
+        index_path = _static_path / "index.html"
+        if not index_path.exists():
+            raise HTTPException(status_code=404, detail="frontend index not found")
+        return FileResponse(index_path)
+
+    @app.get("/paperradar/{path:path}")
+    def paperradar_frontend_asset_or_page(path: str) -> FileResponse:
+        candidates = []
+        if path:
+            candidates.extend([
+                _static_path / path,
+                _static_path / f"{path}.html",
+                _static_path / path / "index.html",
+            ])
+        for candidate in candidates:
+            try:
+                resolved = candidate.resolve()
+            except FileNotFoundError:
+                continue
+            if _static_path in resolved.parents or resolved == _static_path:
+                if resolved.is_file():
+                    return FileResponse(resolved)
+        index_path = _static_path / "index.html"
+        if index_path.exists():
+            return FileResponse(index_path)
+        raise HTTPException(status_code=404, detail="frontend asset not found")

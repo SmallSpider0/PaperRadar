@@ -209,7 +209,7 @@ def update_user(user_id: str, *, password: str | None = None, role: str | None =
     if role:
         sets.append(f"role = '{'admin' if role == 'admin' else 'user'}'")
     if status:
-        sets.append(f"status = '{status.replace("'", "''")}'")
+        sets.append(f"status = '{status.replace(chr(39), chr(39) + chr(39))}'")
     output = run_sql(
         f"""
         UPDATE users
